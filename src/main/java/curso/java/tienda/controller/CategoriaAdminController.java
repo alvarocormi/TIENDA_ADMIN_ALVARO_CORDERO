@@ -19,20 +19,20 @@ public class CategoriaAdminController {
 
 	@GetMapping("/categoriesAdmin")
 	public String findAll(Model model) {
-		model.addAttribute("categoriesAdmin", categoriaRepository.findAll());
+		model.addAttribute("categories", categoriaRepository.findAll());
 		return "category-listAdmin";
 	}
 
 	@GetMapping("/categoriesAdmin/form")
 	public String getEmptyForm(Model model) {
-		model.addAttribute("categoryAdmin", new CategoriaVO());
+		model.addAttribute("category", new CategoriaVO());
 		return "category-formAdmin";
 	}
 
 	@GetMapping("/categoriesAdmin/edit/{id}")
 	public String getFormWithcategoryAdmin(Model model, @PathVariable Integer id) {
 		if (categoriaRepository.existsById(id)) {
-			categoriaRepository.findById(id).ifPresent(c -> model.addAttribute("categoryAdmin", c));
+			categoriaRepository.findById(id).ifPresent(c -> model.addAttribute("category", c));
 			return "category-formAdmin";
 		} else {
 			return "redirect:/categoriesAdmin/form";
