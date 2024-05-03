@@ -16,4 +16,7 @@ public interface UsuarioRepository extends JpaRepository<UsuarioVO, Integer> {
 
 	@Query("SELECT u FROM UsuarioVO u WHERE u.id_rol = :idRol")
 	List<UsuarioVO> findById_Rol(int idRol);
+	
+	@Query("SELECT u FROM UsuarioVO u WHERE u.id_rol = :idRol1 OR u.id_rol = :idRol2")
+    List<UsuarioVO> findByRoles(int idRol1, int idRol2);
 }

@@ -118,12 +118,13 @@
 			var clientId = getIdFromUrl();
 
 			// URL objetivo que queremos validar
-			var urlObjetivo = `http://localhost:9090/clients/edit/${clientId}`;
+			var urlObjetivo = `http://localhost:9090/clientsAdmin/edit/${clientId}`;
 
 			// Verificar si la URL actual coincide con la URL objetivo
 			if (urlActual === urlObjetivo) {
 				// Ocultar el campo 2
 				document.getElementById('clave').style.display = 'none';
+				document.getElementById('opcion').style.display = 'none';
 			}
 		}
 
@@ -323,7 +324,7 @@
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link d-flex align-items-center gap-2" th:href="@{/pedidos}">
+								<a class="nav-link d-flex align-items-center gap-2" th:href="@{/pedidosAdmin}">
 									<svg class="bi">
 										<use xlink:href="#file-earmark" />
 									</svg>
@@ -331,7 +332,7 @@
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link d-flex align-items-center gap-2" th:href="@{/products}">
+								<a class="nav-link d-flex align-items-center gap-2" th:href="@{/productsAdmin}">
 									<svg class="bi">
 										<use xlink:href="#cart" />
 									</svg>
@@ -339,7 +340,7 @@
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link d-flex align-items-center gap-2" th:href="@{/clients}">
+								<a class="nav-link d-flex align-items-center gap-2" th:href="@{/clientsAdmin}">
 									<svg class="bi">
 										<use xlink:href="#people" />
 									</svg>
@@ -347,7 +348,7 @@
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link d-flex align-items-center gap-2" th:href="@{/categories}">
+								<a class="nav-link d-flex align-items-center gap-2" th:href="@{/categoriesAdmin}">
 									<svg class=" bi">
 										<use xlink:href="#graph-up" />
 									</svg>
@@ -361,7 +362,7 @@
 
 						<ul class="nav flex-column mb-auto">
 							<li class="nav-item">
-								<a class="nav-link d-flex align-items-center gap-2" href="#">
+								<a class="nav-link d-flex align-items-center gap-2" th:href="@{/logout}">
 									<svg class="bi">
 										<use xlink:href="#door-closed" />
 									</svg>
@@ -398,13 +399,17 @@
 						<div class="col">
 
 
-							<form th:action="@{/clients}" method="POST" th:object="${client}">
+							<form th:action="@{/clientsAdmin}" method="POST" th:object="${client}">
 
 								<!-- Input para el ID (oculto y deshabilitado) -->
 								<input type="hidden" th:field="*{id}">
-								<input type="hidden" th:field="*{id_rol}">
-
-
+								<div class="mb-3" id="opcion">
+									<label for="opcion">Tipo de Usuario:</label>
+									<select th:field="*{id_rol}">
+										<option value="1">Cliente</option>
+										<option value="2">Empleado</option>
+									</select>
+								</div>
 								<!-- Campo para el Email -->
 								<div class="mb-3">
 									<label for="email" class="form-label">Email</label>

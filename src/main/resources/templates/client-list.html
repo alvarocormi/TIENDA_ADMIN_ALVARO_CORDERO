@@ -329,7 +329,7 @@
 
 						<ul class="nav flex-column mb-auto">
 							<li class="nav-item">
-								<a class="nav-link d-flex align-items-center gap-2" href="#">
+								<a class="nav-link d-flex align-items-center gap-2" th:href="@{/logout}">
 									<svg class="bi">
 										<use xlink:href="#door-closed" />
 									</svg>
@@ -372,6 +372,7 @@
 								<th scope="col"> Provincia</th>
 								<th scope="col"> Telefono</th>
 								<th scope="col"> Dni</th>
+								<th scope="col"> FechaBaja</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -385,6 +386,7 @@
 								<td th:text="${client.provincia}"></td>
 								<td th:text="${client.telefono}"></td>
 								<td th:text="${client.dni}"></td>
+								<td th:text="${client.fecha_baja}"></td>
 								<td>
 									<a class="btn btn-success"
 										th:href="@{/clients/edit/{id}(id=${client.id})}">Editar</a>
