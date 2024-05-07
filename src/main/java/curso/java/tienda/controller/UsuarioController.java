@@ -1,6 +1,7 @@
 package curso.java.tienda.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import curso.java.tienda.model.UsuarioVO;
 import curso.java.tienda.repository.UsuarioRepository;
@@ -23,7 +25,28 @@ public class UsuarioController {
 		model.addAttribute("clients", usuarioRepository.findById_Rol(1));
 		return "client-list";
 	}
-	
+
+	@GetMapping("/clients/cambiarClave")
+	public String verCambiarClaves() {
+		return "cambiarClave";
+
+	}
+
+	@PostMapping("/clients/cambiarClave/edit")
+	public String CambiarClaves(@RequestParam String nuevaClave, @RequestParam String clave,
+			@RequestParam String claveRepetida) {
+
+		if (!clave.equals(claveRepetida)) {
+			return "cambiarClave";
+		} else {
+			String claveEncriptada = BCrypt.hashpw(nuevaClave, BCrypt.gensalt());
+			usuarioRepository.actualizarClaveUsuario("administrador@gmail.com", claveEncriptada);
+			return "dashboard";
+
+		}
+
+	}
+
 	@GetMapping("/clients/form")
 	public String getEmptyForm(Model model) {
 		model.addAttribute("client", new UsuarioVO());
@@ -40,32 +63,31 @@ public class UsuarioController {
 		}
 
 	}
-	
+
 	@PostMapping("/clients")
 	public String createUser(@ModelAttribute UsuarioVO usuario) {
-		 BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-	    if (usuario.getId() != 0) {
-	        usuarioRepository.findById(usuario.getId()).ifPresent(existingUser -> {
-	            existingUser.setNombre(usuario.getNombre());
-	            existingUser.setApellido1(usuario.getApellido1());
-	            existingUser.setApellido2(usuario.getApellido2());
-	            existingUser.setEmail(usuario.getEmail());
-	            existingUser.setId_rol(usuario.getId_rol());
-	            existingUser.setDireccion(usuario.getDireccion());
-	            existingUser.setLocalidad(usuario.getLocalidad());
-	            existingUser.setProvincia(usuario.getProvincia());
-	            existingUser.setTelefono(usuario.getTelefono());
-	            existingUser.setDni(usuario.getDni());
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		if (usuario.getId() != 0) {
+			usuarioRepository.findById(usuario.getId()).ifPresent(existingUser -> {
+				existingUser.setNombre(usuario.getNombre());
+				existingUser.setApellido1(usuario.getApellido1());
+				existingUser.setApellido2(usuario.getApellido2());
+				existingUser.setEmail(usuario.getEmail());
+				existingUser.setId_rol(usuario.getId_rol());
+				existingUser.setDireccion(usuario.getDireccion());
+				existingUser.setLocalidad(usuario.getLocalidad());
+				existingUser.setProvincia(usuario.getProvincia());
+				existingUser.setTelefono(usuario.getTelefono());
+				existingUser.setDni(usuario.getDni());
 
-	            usuarioRepository.save(existingUser);
-	        });
-	    } else {
-	    	usuario.setId_rol(1);
-	    	usuario.setClave(encoder.encode(usuario.getClave()));
-	        usuarioRepository.save(usuario);
-	    }
-	    return "redirect:/clients";
+				usuarioRepository.save(existingUser);
+			});
+		} else {
+			usuario.setId_rol(1);
+			usuario.setClave(encoder.encode(usuario.getClave()));
+			usuarioRepository.save(usuario);
+		}
+		return "redirect:/clients";
 	}
 
-	
 }
