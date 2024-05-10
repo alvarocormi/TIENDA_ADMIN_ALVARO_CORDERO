@@ -9,7 +9,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 	<meta name="generator" content="Hugo 0.122.0">
-	<title>Categiry List</title>
+	<title>Categiry List Admin</title>
 
 	<link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
 
@@ -241,7 +241,7 @@
 	</svg>
 
 	<header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
-		<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#">Company name</a>
+		<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#">Amuebla</a>
 
 		<ul class="navbar-nav flex-row d-md-none">
 			<li class="nav-item text-nowrap">
@@ -291,15 +291,15 @@
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link d-flex align-items-center gap-2" href="#">
-									<svg class="bi">
+								<a class="nav-link d-flex align-items-center gap-2" th:href="@{/pedidosAdmin}">
+									<svg class=" bi">
 										<use xlink:href="#file-earmark" />
 									</svg>
 									Orders
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link d-flex align-items-center gap-2" th:href="@{/products}">
+								<a class="nav-link d-flex align-items-center gap-2" th:href="@{/productsAdmin}">
 									<svg class=" bi">
 										<use xlink:href="#cart" />
 									</svg>
@@ -307,11 +307,19 @@
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link d-flex align-items-center gap-2" th:href="@{/clients}">
+								<a class="nav-link d-flex align-items-center gap-2" th:href="@{/clientsAdmin}">
 									<svg class="bi">
 										<use xlink:href="#people" />
 									</svg>
 									Clients
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link d-flex align-items-center gap-2" th:href="@{/categoriesAdmin}">
+									<svg class=" bi">
+										<use xlink:href="#graph-up" />
+									</svg>
+									Categories
 								</a>
 							</li>
 
@@ -321,15 +329,7 @@
 
 						<ul class="nav flex-column mb-auto">
 							<li class="nav-item">
-								<a class="nav-link d-flex align-items-center gap-2" href="#">
-									<svg class="bi">
-										<use xlink:href="#gear-wide-connected" />
-									</svg>
-									Settings
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link d-flex align-items-center gap-2" href="#">
+								<a class="nav-link d-flex align-items-center gap-2" th:href="@{/logout}">
 									<svg class="bi">
 										<use xlink:href="#door-closed" />
 									</svg>
@@ -374,7 +374,7 @@
 								<td th:text="${category.descripcion}"></td>
 								<td>
 									<a class="btn btn-success"
-										th:href="@{/categories/edit/{id}(id=${category.id})}">Editar</a>
+										th:href="@{/categoriesAdmin/edit/{id}(id=${category.id})}">Editar</a>
 								</td>
 							</tr>
 						</tbody>
