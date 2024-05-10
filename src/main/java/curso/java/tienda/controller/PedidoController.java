@@ -15,6 +15,7 @@ import curso.java.tienda.model.DetallePedidoVO;
 import curso.java.tienda.model.PedidoVO;
 import curso.java.tienda.repository.DetallePedidoRepository;
 import curso.java.tienda.repository.PedidoRepository;
+import curso.java.tienda.service.EnviarCorreo;
 
 @Controller
 public class PedidoController {
@@ -39,6 +40,7 @@ public class PedidoController {
     public String cambiarEstadoPedido(@PathVariable Integer id) {
         pedidoRepository.findById(id).ifPresent(existingPedido -> {
             existingPedido.setEstado("E");
+            EnviarCorreo.enviarCorreo("Alvaro", "alvaro@gmail.com", "644767899", "Su pedido se ha enviado correctamente", "Pedido enviado");
 
             // Recuperar todas las líneas de pedido para este pedido específico
             List<DetallePedidoVO> detallesPedido = detallePedidoRepository.findByIdPedido(id);

@@ -41,7 +41,7 @@ public class UsuarioController {
 		} else {
 			String claveEncriptada = BCrypt.hashpw(nuevaClave, BCrypt.gensalt());
 			usuarioRepository.actualizarClaveUsuario("administrador@gmail.com", claveEncriptada);
-			return "dashboard";
+			return "redirect:http://localhost:8080/TIENDA_ALVARO_CORDERO/";
 
 		}
 
